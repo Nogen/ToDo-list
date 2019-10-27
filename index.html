@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ToDo</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body onload="init();">
+    <nav>
+      <div class="logo">ToDo list</div>
+      <div class="viewbuttons">
+        
+    </nav>
+    <section id="command">
+      <div id="grid">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div id="list" class="selected">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="verticalSpacer"></div>
+    <label class="filterLabel">Filters: </label>
+    <div class="filterDone">Done</div>
+    </section>
+    <section id="container">
+      <div class="itemList"></div>
+    </section>
+    <button class="fab">+</button>
+    <script src="./js/app.js"></script>
+    <script src="./js/models/Style.js"></script>
+    <script src="./js/models/MyAppStyleFactory.js"></script>
+    <script src="./js/viewes/Card.js"></script>
+    <script src="./js/viewes/ListItemViewer.js"></script>
+    <script src="./js/viewes/EditableListItem.js"></script>
+    <script src="./js/models/Item.js"></script>
+    <script src="./js/models/persistence/LisItemDao.js"></script>
+    <script src="./js/controllers/ListItemController.js"></script>
+    <script src="./js/controllers/FrontController.js"></script>
+    <script src="./js/utils/Validator.js"></script>
+    <script src="./js/utils/DateConverter.js"></script>
+  </body>
+</html>
