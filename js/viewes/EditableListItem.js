@@ -18,8 +18,8 @@ class EditableListItem {
     this.dateInput = document.createElement("input");
     this.dateInput.type = "date";
     this.dateInput.id = "dateInput";
-    this.dateInput.value = Dateconverter.toString(new Date());
-    this.dateInput.min = Dateconverter.toString(new Date());
+    this.dateInput.value = DateConverter.toString(new Date());
+    this.dateInput.min = DateConverter.toString(new Date());
 
     this.buttonContainer = document.createElement("div");
     this.buttonContainer.id = "buttonContainer";

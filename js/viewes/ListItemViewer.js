@@ -4,6 +4,12 @@ class ListItemViewer {
     this.card = new Card(style.getStyle("card"));
     this.id = id;
 
+    this.cardTitle = document.createElement("div");
+    this.cardTitle.id = "cardTitle";
+
+    this.checkMark = document.createElement("div");
+    this.checkMark.id = "checkMark";
+
     this.descriptionStrong = document.createElement("strong");
     this.descriptionStrong.id = "descriptionStrong";
 
@@ -44,6 +50,9 @@ class ListItemViewer {
 
     this.refreshStyle();
 
+    this.cardTitle.appendChild(this.descriptionStrong);
+    this.cardTitle.appendChild(this.checkMark);
+
     this.createDiv.appendChild(this.creationDateLabel);
     this.createDiv.appendChild(this.creationDate);
 
@@ -54,7 +63,7 @@ class ListItemViewer {
     this.buttonContainer.appendChild(this.edit);
     this.buttonContainer.appendChild(this.delete);
 
-    this.card.appendChild(this.descriptionStrong);
+    this.card.appendChild(this.cardTitle);
     this.card.appendChild(this.createDiv);
     this.card.appendChild(this.expireDiv);
     this.card.appendChild(this.buttonContainer);
@@ -63,9 +72,11 @@ class ListItemViewer {
   refreshStyle() {
     this.card.getElement().className = "";
     this.card.getElement().classList.add(...this.style.getStyle("card"));
+    this.cardTitle.classList.add(...this.style.getStyle(this.cardTitle.id));
     this.descriptionStrong.classList.add(
       ...this.style.getStyle(this.descriptionStrong.id)
     );
+    this.checkMark.classList.add(...this.style.getStyle(this.checkMark.id));
     this.createDiv.classList.add(...this.style.getStyle(this.createDiv.id));
     this.creationDateLabel.classList.add(
       ...this.style.getStyle(this.creationDateLabel.id)
@@ -87,7 +98,7 @@ class ListItemViewer {
   }
 
   markAsDoneStyle() {
-    this.card.setStyle("done");
+    this.checkMark.classList.add("done");
     this.buttonContainer.removeChild(this.edit);
     this.buttonContainer.removeChild(this.markAsDone);
   }

@@ -3,7 +3,7 @@ class Item {
     this.id = id;
     this.description = description;
     this.expireDate = expireDate;
-    this.creationDate = Dateconverter.toString(new Date());
+    this.creationDate = DateConverter.toString(new Date());
     this.done = done;
   }
 
@@ -41,5 +41,20 @@ class Item {
 
   setExpireDate(date) {
     this.expireDate = date;
+  }
+
+  toString() {
+    return (
+      "id:" +
+      this.getId() +
+      " | description:" +
+      this.getDescription() +
+      " | creationDate: " +
+      this.getCreationDate() +
+      " | expireDate:" +
+      this.getExpireDate() +
+      " | marked:" +
+      this.isDone()
+    );
   }
 }

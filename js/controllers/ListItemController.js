@@ -6,7 +6,9 @@ class ListItemController {
 
   createItem() {
     this.view.markAsNew();
-    let item = new Item("default", "default", false);
+    this.view.setDescription("defualt");
+    this.view.setExpireDate(DateConverter.toString(new Date()));
+    let item = new Item("default", DateConverter.toString(new Date()), false);
     item = this.itemDao.save(item);
     return item.getId();
   }
@@ -28,13 +30,15 @@ class ListItemController {
     let errorMsgDescription = Validator.validateDescription(description);
     let errorMsgExpireDate = Validator.validateExpireDate(expireDate);
     if (errorMsgDescription.length > 0 || errorMsgExpireDate.length > 0) {
-      if ( errorMsgExpireDate.length > 0 ) {
+      if (errorMsgExpireDate.length > 0) {
         this.view.setInvalidExpireDate(errorMsgExpireDate);
-      } 
+      }
       if (errorMsgDescription.length > 0) {
         this.view.setInvalidDescription(errorMsgDescription);
       }
-      this.view.setInputError(errorMsgDescription + "<br>" + errorMsgExpireDate);
+      this.view.setInputError(
+        errorMsgDescription + "<br>" + errorMsgExpireDate
+      );
     } else {
       item.setDescription(description);
       item.setExpireDate(expireDate);
@@ -68,6 +72,6 @@ class ListItemController {
 
   deleteItem(id) {
     this.view.removeFromParentWithTransition("remove", 400);
-    this.itemDao.deleteById(this.view.getID());
+    this.itemDao.deleteById(id);
   }
 }

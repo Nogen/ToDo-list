@@ -32,4 +32,38 @@ class ListItemDao {
   deleteById(id) {
     this.source.delete(id);
   }
+
+  searchByKey(query) {
+    let listItem = this.findAll();
+    for (let word of query.split(/\s/)) {
+      listItem = listItem.filter(
+        i =>
+          i
+            .toString()
+            .toLowerCase()
+            .search(word.toLowerCase()) > -1
+      );
+    }
+    return listItem;
+  }
+
+  filterByExpireDateFrom(date) {
+    return this.findAll().filter(
+      i => DateConverter.toDate(i.getExpireDate()) - date > 0
+    );
+  }
+
+  filterByExpireDateTo(date) {
+    return this.findAll().filter(
+      i => DateConverter.toDate(i.getExpireDate()) - date < 0
+    );
+  }
+
+  filterByDateRange(dateFirst, dateLast) {
+    return this.findAll().filter(
+      i =>
+        DateConverter.toDate(i.getExpireDate()) - dateFirst > 0 &&
+        DateConverter.toDate(i.getExpireDate()) - dateLast < 0
+    );
+  }
 }

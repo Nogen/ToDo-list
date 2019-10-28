@@ -20,7 +20,9 @@ class MyAppStyleFactory {
         alertBox: "alert",
         closeAlert: "closeAlert",
         dateInput: "inputBox",
-        descriptionInput: "inputBox"
+        descriptionInput: "inputBox",
+        cardTitle: "cardTitle",
+        checkMark: "checkMark"
       });
     }
     return MyAppStyleFactory.instance;

@@ -5,18 +5,27 @@ function init() {
   let filterDone = document.querySelector(".filterDone");
   let parent = document.querySelector(".itemList");
   let style = MyAppStyleFactory._instance();
-  let index = 0;
   let mockDb = new Map();
   mockDb.set(0, new Item("Not yet completed", "2020-10-10", false, 0));
   mockDb.set(1, new Item("Task Completed", "2019-10-10", true, 1));
+  mockDb.set(2, new Item("Esame MRI", "2019-11-12", false, 2));
   let dao = new ListItemDao(mockDb);
   let frontController = new FrontController(parent, style, dao);
   frontController.loadAllItems();
 
-  console.log("1: ", Validator.validateExpireDate(""), "\n2:",
-  Validator.validateExpireDate("1994-04-03"), "\n3: ",
-  Validator.validateExpireDate(" 1994-03-04"), "\n4: ",
-  Validator.validateExpireDate("1994-03-3"));
+  console.log("porva".split(/\s/));
+  console.log(dao.searchByKey("true"));
+
+  console.log(
+    "1: ",
+    Validator.validateExpireDate(""),
+    "\n2:",
+    Validator.validateExpireDate("1994-04-03"),
+    "\n3: ",
+    Validator.validateExpireDate(" 1994-03-04"),
+    "\n4: ",
+    Validator.validateExpireDate("1994-03-3")
+  );
 
   filterDone.addEventListener("click", () => {
     filterDone.classList.toggle("selected");

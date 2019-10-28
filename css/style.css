@@ -59,12 +59,12 @@ nav {
   margin-top: 8vh;
   display: flex;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.5);
   align-items: center;
 }
 
 .verticalSpacer {
-  height: 40px;
+  height: 35px;
   width: 2px;
   background: rgba(0, 0, 0, 0.1);
   margin-left: 10px;
@@ -73,14 +73,14 @@ nav {
 
 .filterLabel {
   margin-right: 20px;
-  text-transform: uppercase;
+  text-transform: capitalize;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.7);
 }
 
 .filterDone {
   border: 1px solid rgba(0, 0, 0, 0.7);
-  padding: 10px;
+  padding: 5px;
   margin-right: 10px;
   cursor: pointer;
   color: rgba(0, 0, 0, 0.7);
@@ -128,8 +128,6 @@ nav {
 .viewerDivs {
   color: rgba(0, 0, 0, 0.98);
   margin-bottom: 5px;
-  width: 50%;
-  align-self: center;
 }
 
 .buttonContainer {
@@ -182,14 +180,16 @@ nav {
 }
 
 .done {
-  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  width: 25px;
+  height: 25px;
 }
 
 .done::before {
   content: "\2713";
   position: absolute;
-  bottom: 16px;
-  right: 16px;
+  bottom: 0;
+  right: 0;
   font-size: 35px;
   color: rgb(55, 226, 55);
 }
@@ -197,7 +197,7 @@ nav {
 .dateContainer {
   display: flex;
   padding: 10px;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
 }
 
@@ -231,7 +231,7 @@ nav {
 }
 
 .labelBox {
-  margin: 20px 0 5px 10%;
+  margin: 20px 0 5px 0;
 }
 
 .inputBox {
@@ -283,11 +283,14 @@ nav {
 }
 
 #grid {
-  width: 50px;
-  height: 35px;
+  margin-left: 5px;
+  margin-right: 5px;
+  position: relative;
+  width: 20px;
+  height: 20px;
   display: grid;
   grid-template-rows: 5% 30% 30% 30% 5%;
-  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-columns: 5% 30% 30% 30% 5%;
   align-items: center;
   justify-items: center;
   cursor: pointer;
@@ -299,9 +302,9 @@ nav {
 }
 
 #grid div {
-  width: 8px;
-  height: 8px;
-  border: 2px solid rgba(0, 0, 0, 0.7);
+  width: 5px;
+  height: 5px;
+  background: rgba(0, 0, 0, 0.7);
 }
 
 #grid div:nth-child(1) {
@@ -350,36 +353,98 @@ nav {
 }
 
 #list {
-  display: flex;
-  flex-direction: column;
+  margin-right: 5px;
+  margin-left: 5px;
+  position: relative;
+  display: grid;
+  grid-template-rows: 5% 30% 30% 30% 5%;
+  justify-items: center;
   align-items: center;
-  justify-content: space-around;
-  width: 50px;
-  height: 35px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
   border-radius: 5px 5px 5px 5px;
 }
 
 #list div {
-  width: 30px;
-  height: 5px;
+  width: 20px;
+  height: 4px;
   background: rgba(0, 0, 0, 0.7);
   border-radius: 5px 5px 5px 5px;
+}
+
+#list div:nth-child(1) {
+  grid-row: 2/3;
+}
+
+#list div:nth-child(2) {
+  grid-row: 3/4;
+}
+
+#list div:nth-child(3) {
+  grid-row: 4/5;
 }
 
 #list:hover {
   opacity: 0.5;
 }
 
-.selected {
+.selected::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: -25%;
+  left: -25%;
+
   background: rgba(0, 0, 0, 0.1);
 }
 
+.cardTitle {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
 @media screen and (max-width: 768px) {
-  .grid {
+  #card.box {
+    max-width: 150px;
+    margin: 5px;
+    padding: 5px;
   }
 
-  #card.box {
+  #card.box .done::before {
+    font-size: 25px;
+  }
+
+  #card.box .dateContainer {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  #card.box .buttonContainer {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #card::before {
+    top: 0;
+    right: 5px;
+  }
+
+  #card.box .saveButton,
+  #card.box .deleteButton,
+  #card.box .markAsDoneButton,
+  #card.box .editButton,
+  #card.box .viewerButton {
+    width: 100%;
+    margin-top: 5px;
   }
 
   .itemViewer {
@@ -392,30 +457,5 @@ nav {
 
   #card .inputBox {
     width: 100%;
-  }
-
-  #grid {
-    display: none;
-  }
-
-  #list {
-    display: none;
-  }
-
-  #command {
-    position: relative;
-    margin-top: 8vh;
-    display: flex;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.5);
-    align-items: center;
-  }
-
-  .verticalSpacer {
-    height: 30px;
-    width: 2px;
-    background: rgba(0, 0, 0, 0.1);
-    margin-left: 10px;
-    margin-right: 20px;
   }
 }
