@@ -25,10 +25,16 @@ class ListItemController {
     let item = this.itemDao.find(id);
     let description = this.view.getDescription();
     let expireDate = this.view.getExpireDate();
-    let errorMsg = Validator.validateDescription(description);
-    if (errorMsg.length > 0) {
-      this.view.setInvalidDescription(errorMsg);
-      this.view.setInputError(errorMsg);
+    let errorMsgDescription = Validator.validateDescription(description);
+    let errorMsgExpireDate = Validator.validateExpireDate(expireDate);
+    if (errorMsgDescription.length > 0 || errorMsgExpireDate.length > 0) {
+      if ( errorMsgExpireDate.length > 0 ) {
+        this.view.setInvalidExpireDate(errorMsgExpireDate);
+      } 
+      if (errorMsgDescription.length > 0) {
+        this.view.setInvalidDescription(errorMsgDescription);
+      }
+      this.view.setInputError(errorMsgDescription + "<br>" + errorMsgExpireDate);
     } else {
       item.setDescription(description);
       item.setExpireDate(expireDate);
