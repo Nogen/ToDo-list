@@ -2,29 +2,25 @@ class ListItemController {
   constructor(itemDao, view) {
     this.itemDao = itemDao;
     this.view = view;
+    this.item = null;
   }
 
   createItem() {
     this.view.markAsNew();
-    this.view.setDescription("defualt");
-    this.view.setExpireDate(DateConverter.toString(new Date()));
-    let item = new Item("default", DateConverter.toString(new Date()), false);
-    item = this.itemDao.save(item);
-    return item.getId();
   }
 
   loadItem(id) {
-    let item = this.itemDao.find(id);
-    this.view.setDescription(item.getDescription());
-    this.view.setExpireDate(item.getExpireDate());
-    this.view.setCurrentDate(item.getCreationDate());
-    if (item.isDone()) {
+    this.item = this.itemDao.find(id);
+    this.view.viewMe();
+    this.view.setDescription(this.item.getDescription());
+    this.view.setExpireDate(this.item.getExpireDate());
+    this.view.setCurrentDate(this.item.getCreationDate());
+    if (this.item.isDone()) {
       this.view.markAsDoneStyle();
     }
   }
 
-  saveItem(id, newView) {
-    let item = this.itemDao.find(id);
+  saveItem() {
     let description = this.view.getDescription();
     let expireDate = this.view.getExpireDate();
     let errorMsgDescription = Validator.validateDescription(description);
@@ -40,38 +36,44 @@ class ListItemController {
         errorMsgDescription + "<br>" + errorMsgExpireDate
       );
     } else {
-      item.setDescription(description);
-      item.setExpireDate(expireDate);
-      newView.setDescription(item.getDescription());
-      newView.setExpireDate(item.getExpireDate());
-      newView.setCurrentDate(item.getCreationDate());
-      newView.refreshStyle();
-      this.view.replaceWithOtherCard(newView);
-      this.view = newView;
-      this.itemDao.update(item);
+      if (this.item == null) {
+        let itemDefault = new Item(
+          "default",
+          DateConverter.toString(new Date()),
+          false
+        );
+        this.item = this.itemDao.save(itemDefault);
+      }
+      this.item.setDescription(description);
+      this.item.setExpireDate(expireDate);
+      this.view.setDescription(this.item.getDescription());
+      this.view.setExpireDate(this.item.getExpireDate());
+      this.view.setCurrentDate(this.item.getCreationDate());
+      this.view.removeNewMark();
+      this.view.viewMe();
+      this.itemDao.update(this.item);
     }
   }
 
-  editItem(id, newView) {
-    let item = this.itemDao.find(id);
-    newView.resetValidity();
-    newView.removeNewMark();
-    newView.setDescription(item.getDescription());
-    newView.getExpireDate(item.getExpireDate());
-    newView.refreshStyle();
-    this.view.replaceWithOtherCard(newView);
-    this.view = newView;
+  editItem() {
+    this.view.resetValidity();
+    this.view.removeNewMark();
+    this.view.setDescription(this.item.getDescription());
+    this.view.setExpireDate(this.item.getExpireDate());
+    this.view.setCurrentDate(this.item.getCreationDate());
+    this.view.editMe();
   }
 
-  markAsDone(id) {
-    let item = this.itemDao.find(id);
-    item.makeDone();
+  markAsDone() {
+    this.item.makeDone();
     this.view.markAsDoneStyle();
-    this.itemDao.update(item);
+    this.itemDao.update(this.item);
   }
 
-  deleteItem(id) {
+  deleteItem() {
     this.view.removeFromParentWithTransition("remove", 400);
-    this.itemDao.deleteById(id);
+    if (this.item != null) {
+      this.itemDao.deleteById(this.item.getId());
+    }
   }
 }

@@ -13,7 +13,6 @@ function init() {
   let frontController = new FrontController(parent, style, dao);
   frontController.loadAllItems();
 
-  console.log("porva".split(/\s/));
   console.log(dao.searchByKey("true"));
 
   console.log(

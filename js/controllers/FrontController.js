@@ -16,65 +16,44 @@ class FrontController {
   }
 
   createNewItem() {
-    let viewer = new ListItemViewer(this.style, 0);
-    let editableView = new EditableListItem(this.style);
-    let controller = new ListItemController(this.itemDao, editableView);
-    let id = controller.createItem();
-
-    editableView.appendToParentAsFirstWithTransition(
+    let view = new AllInOneEditableListItem(this.style);
+    let controller = new ListItemController(this.itemDao, view);
+    controller.createItem();
+    FrontController.bindViewWithController(
       this.parentElement,
-      "adding",
-      100
+      view,
+      controller
     );
-
-    editableView.deleteBtnAddEventListener("click", () =>
-      controller.deleteItem(id)
-    );
-
-    editableView.saveBtnAddEventListener("click", () => {
-      controller.saveItem(id, viewer);
-    });
-
-    viewer.deleteBtnAddEventListener("click", () => controller.deleteItem(id));
-
-    viewer.markAsDoneBtnAddEventListener("click", () =>
-      controller.markAsDone(id)
-    );
-
-    viewer.editBtnAddEventListener("click", () => {
-      controller.editItem(id, editableView);
-    });
   }
 
   loadItem(id) {
-    let viewer = new ListItemViewer(this.style, id);
-    let editableView = new EditableListItem(this.style);
-    let controller = new ListItemController(this.itemDao, viewer);
-
+    let view = new AllInOneEditableListItem(this.style);
+    let controller = new ListItemController(this.itemDao, view);
     controller.loadItem(id);
-
-    viewer.appendToParentAsFirstWithTransition(
+    FrontController.bindViewWithController(
       this.parentElement,
-      "adding",
-      100
+      view,
+      controller
     );
+  }
 
-    editableView.deleteBtnAddEventListener("click", () =>
-      controller.deleteItem(id)
-    );
+  static bindViewWithController(parentElement, view, controller) {
+    view.appendToParentAsFirstWithTransition(parentElement, "adding", 100);
 
-    editableView.saveBtnAddEventListener("click", () => {
-      controller.saveItem(id, viewer);
+    view.deleteBtnAddEventListener("click", () => controller.deleteItem());
+
+    view.saveBtnAddEventListener("click", () => {
+      controller.saveItem();
     });
 
-    viewer.deleteBtnAddEventListener("click", () => controller.deleteItem(id));
+    view.markAsDoneBtnAddEventListener("click", () => controller.markAsDone());
 
-    viewer.markAsDoneBtnAddEventListener("click", () =>
-      controller.markAsDone(id)
-    );
+    view.editBtnAddEventListener("click", () => {
+      controller.editItem();
+    });
 
-    viewer.editBtnAddEventListener("click", () => {
-      controller.editItem(id, editableView);
+    view.cancelBtnAddEventListener("click", () => {
+      controller.deleteItem();
     });
   }
 
