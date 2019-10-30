@@ -70,6 +70,10 @@ class ListItemController {
     this.itemDao.update(this.item);
   }
 
+  cancelView() {
+    this.view.cancelMe();
+  }
+
   deleteItem() {
     this.view.removeFromParentWithTransition("remove", 400);
     if (this.item != null) {

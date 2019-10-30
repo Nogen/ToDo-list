@@ -16,7 +16,7 @@ class FrontController {
   }
 
   createNewItem() {
-    let view = new AllInOneEditableListItem(this.style);
+    let view = new EditableListItem(this.style);
     let controller = new ListItemController(this.itemDao, view);
     controller.createItem();
     FrontController.bindViewWithController(
@@ -27,7 +27,7 @@ class FrontController {
   }
 
   loadItem(id) {
-    let view = new AllInOneEditableListItem(this.style);
+    let view = new EditableListItem(this.style);
     let controller = new ListItemController(this.itemDao, view);
     controller.loadItem(id);
     FrontController.bindViewWithController(
@@ -53,7 +53,7 @@ class FrontController {
     });
 
     view.cancelBtnAddEventListener("click", () => {
-      controller.deleteItem();
+      controller.cancelView();
     });
   }
 
