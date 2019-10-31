@@ -444,7 +444,7 @@ class EditableListItem {
   }
 
   /**
-   * Replace the actua EditableListItem with a new EditableListItem in the parentView
+   * Replace the actual EditableListItem with a new EditableListItem in the parentView
    * @param {EditableListItem} newListItem new view that will replace the old view
    */
   replaceWithOtherCard(newListItem) {

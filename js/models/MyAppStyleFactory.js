@@ -1,3 +1,6 @@
+/**
+ * Factory Method class that binds my style with views objects
+ */
 class MyAppStyleFactory {
   static _instance() {
     if (!MyAppStyleFactory.instance) {
